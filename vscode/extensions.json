@@ -1,0 +1,28 @@
+{
+  "recommendations": [
+    "antfu.browse-lite",
+    "antfu.goto-alias",
+    "antfu.iconify",
+    "antfu.unocss",
+    "antfu.vite",
+    "christian-kohler.npm-intellisense",
+    "christian-kohler.path-intellisense",
+    "csstools.postcss",
+    "dbaeumer.vscode-eslint",
+    "eamodio.gitlens",
+    "formulahendry.auto-close-tag",
+    "lokalise.i18n-ally",
+    "ms-azuretools.vscode-docker",
+    "ms-vscode-remote.remote-ssh",
+    "ms-vscode-remote.remote-ssh-edit",
+    "ms-vscode-remote.remote-wsl",
+    "ms-vscode.powershell",
+    "streetsidesoftware.code-spell-checker",
+    "usernamehw.errorlens",
+    "VisualStudioExptTeam.vscodeintellicode",
+    "voorjaar.windicss-intellisense",
+    "vscode-icons-team.vscode-icons",
+    "Vue.volar",
+    "zhuangtongfa.material-theme"
+  ]
+}
