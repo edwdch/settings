@@ -1,19 +1,10 @@
+# config current file
+# echo ". `$env:userprofile\settings\pwsh\Microsoft.PowerShell_profile.ps1" > $PROFILE
+
 # === antfu/ni ===
 # https://github.com/antfu/ni#conflicts-with-powershell
-
-if (-not (Test-Path $profile)) {
-  New-Item -ItemType File -Path (Split-Path $profile) -Force -Name (Split-Path $profile -Leaf)
-}
-
-$profileEntry = 'Remove-Item Alias:ni -Force -ErrorAction Ignore'
-$profileContent = Get-Content $profile
-if ($profileContent -notcontains $profileEntry) {
-  $profileEntry | Out-File $profile -Append -Force
-}Remove-Item Alias:ni -Force -ErrorAction Ignore
 Remove-Item Alias:ni -Force -ErrorAction Ignore
 Remove-Item Alias:mi -Force -ErrorAction Ignore
-
-# === antfu/ni ===
 
 # === MY SELF ALIAS ===
 Function mambaInstall { 
@@ -102,6 +93,10 @@ function gitCommonCommitAndPush {
   git push
 }
 
+function makeLink ($target, $link) {
+  New-Item -Path $link -ItemType HardLink -Value $target
+}
+
 Set-Alias -Name mi -Value mambaInstall
 Set-Alias -Name ms -Value mambaSearch
 Set-Alias -Name ml -Value mambaListPackages
@@ -122,20 +117,29 @@ Set-Alias -Name vim -Value nvim
 
 Set-Alias -Name ll -Value ls
 Set-Alias -Name grep -Value findstr
-
-# === MY SELF ALIAS ===
+Set-Alias -Name mklink -Value makeLink
 
 # === Oh-My-Posh ===
 # https://ohmyposh.dev/docs/installation/windows
-
 oh-my-posh init pwsh | Invoke-Expression
-oh-my-posh init pwsh --config 'C:\Users\xinze\AppData\Local\Programs\oh-my-posh\themes\takuya.omp.json' | Invoke-Expression
-
-# === Oh-My-Posh ===
+oh-my-posh init pwsh --config $env:userprofile\AppData\Local\Programs\oh-my-posh\themes\takuya.omp.json | Invoke-Expression
 
 # === inport module === 
 # https://github.com/devblackops/Terminal-Icons#installation
-
 Import-Module -Name Terminal-Icons
 
-# === inport module === 
+# === vscode ===
+function vscodeExportAllExtensions {
+  param(
+    $filename = 'extensions.json'
+  )
+  $extensions = code --list-extensions
+  for ( $index = 0; $index -lt $extensions.count; $index++) {
+    $extensions[$index] = '"' + $extensions[$index] + '"'
+  }
+  $extensions = $extensions -join ","
+  $result = -join ("[", $extensions , "]")
+  $result | jq '{recommendations: .}' > $filename
+}
+
+Set-Alias -Name vsc_export -Value vscodeExportAllExtensions
